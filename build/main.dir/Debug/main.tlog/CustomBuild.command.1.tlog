@@ -1,0 +1,10 @@
+^C:\USERS\PRICE\CODE\SFML_NETWORK\SFML_NETWORKING\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/price/Code/sfml_network/sfml_networking -BC:/Users/price/Code/sfml_network/sfml_networking/build --check-stamp-file C:/Users/price/Code/sfml_network/sfml_networking/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

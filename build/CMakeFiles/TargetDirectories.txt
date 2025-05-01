@@ -1,0 +1,3 @@
+C:/Users/price/Code/sfml_network/sfml_networking/build/CMakeFiles/main.dir
+C:/Users/price/Code/sfml_network/sfml_networking/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/price/Code/sfml_network/sfml_networking/build/CMakeFiles/ZERO_CHECK.dir
