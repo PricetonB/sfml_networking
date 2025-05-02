@@ -6,12 +6,12 @@
 int main() {
     bool hosting = true; // Set to false for client
     const unsigned short port = 53000;
-    const sf::IpAddress serverIp = "127.0.0.1";
+    const sf::IpAddress serverIp(192,168,0,145);
 
     if (hosting) {
         // --- Server Code ---
         sf::TcpListener listener;
-        if (listener.listen(port) != sf::Socket::Done) {
+        if (listener.listen(port) != sf::Socket::Status::Done) {
             std::cerr << "Failed to bind listener\n";
             return 1;
         }
@@ -23,15 +23,16 @@ int main() {
         bool connected = false;
 
         while (!connected) {
-            if (listener.accept(client) == sf::Socket::Done) {
+            if (listener.accept(client) == sf::Socket::Status::Done) {
                 connected = true;
                 std::cout << "Client connected!\n";
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	    std::cout << "waiting on client\n";
         }
 
         std::string msg = "hello";
-        if (client.send(msg.c_str(), msg.size()) != sf::Socket::Done) {
+        if (client.send(msg.c_str(), msg.size()) != sf::Socket::Status::Done) {
             std::cerr << "Failed to send message\n";
         } else {
             std::cout << "Sent: " << msg << "\n";
@@ -43,12 +44,12 @@ int main() {
         socket.setBlocking(false);
 
         sf::Socket::Status status = socket.connect(serverIp, port);
-        if (status != sf::Socket::Done) {
+        if (status != sf::Socket::Status::Done) {
             std::cout << "Waiting for connection...\n";
         }
 
         // Try connecting until successful
-        while (socket.getRemoteAddress() == sf::IpAddress::None) {
+        while (socket.getRemoteAddress() != serverIp) {
             socket.connect(serverIp, port);
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
@@ -57,7 +58,7 @@ int main() {
         std::size_t received;
         while (true) {
             sf::Socket::Status result = socket.receive(buffer.data(), buffer.size(), received);
-            if (result == sf::Socket::Done) {
+            if (result == sf::Socket::Status::Done) {
                 std::string msg(buffer.data(), received);
                 std::cout << "Received: " << msg << "\n";
                 break;

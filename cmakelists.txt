@@ -16,9 +16,6 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(main 
     src/main.cpp
-    src/Game.cpp
-    src/EntityManager.cpp
-    src/Entity.cpp
 )
 
 configure_file(${CMAKE_SOURCE_DIR}/src/config.txt ${CMAKE_CURRENT_BINARY_DIR}/config.txt COPYONLY)
