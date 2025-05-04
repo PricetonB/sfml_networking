@@ -3,12 +3,27 @@
 #include <array>
 #include <thread>
 
+
+bool setHosting() {
+    char number;
+    while (true) {
+        std::cout << "Press 1 to host or 0 to join and press enter: ";
+        std::cin >> number;
+
+        if (number == '1') return true;
+        if (number == '0') return false;
+
+        std::cout << "error: not a valid entry\n";
+    }
+}
+
+
 int main() {
-    bool hosting = true; // Set to false for client
+    bool hosting = setHosting(); 
     const unsigned short port = 53000;
     const sf::IpAddress serverIp(192,168,0,145);
-
-    if (hosting) {
+    
+     if (hosting) {
         // --- Server Code ---
         sf::TcpListener listener;
         if (listener.listen(port) != sf::Socket::Status::Done) {
